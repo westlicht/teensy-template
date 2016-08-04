@@ -1,0 +1,9 @@
+[submodule "libraries/ADC"]
+	path = libraries/ADC
+	url = https://github.com/pedvide/ADC.git
+[submodule "libraries/TFT_ST7735"]
+	path = libraries/TFT_ST7735
+	url = https://github.com/sumotoy/TFT_ST7735.git
+[submodule "libraries/SYLT-FFT"]
+	path = libraries/SYLT-FFT
+	url = https://github.com/stg/SYLT-FFT.git
