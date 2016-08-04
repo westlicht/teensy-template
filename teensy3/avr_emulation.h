@@ -992,16 +992,49 @@ public:
 		return ret;
 	}
 	inline void setMOSI(uint8_t pin) __attribute__((always_inline)) {
-		if (pin == 11) pinout &= ~1;
-		if (pin == 7) pinout |= 1;
+		uint8_t newpinout = pinout;
+		if (pin == 11) newpinout &= ~1;
+		if (pin == 7) newpinout |= 1;
+		if ((SIM_SCGC6 & SIM_SCGC6_SPI0) && newpinout != pinout) {
+			if ((newpinout & 1) == 0) {
+				CORE_PIN7_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+				CORE_PIN11_CONFIG = PORT_PCR_DSE | PORT_PCR_MUX(2);
+			} else {
+				CORE_PIN11_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+				CORE_PIN7_CONFIG = PORT_PCR_MUX(2);
+			}
+		}
+		pinout = newpinout;
 	}
 	inline void setMISO(uint8_t pin) __attribute__((always_inline)) {
-		if (pin == 12) pinout &= ~2;
-		if (pin == 8) pinout |= 2;
+		uint8_t newpinout = pinout;
+		if (pin == 12) newpinout &= ~2;
+		if (pin == 8) newpinout |= 2;
+		if ((SIM_SCGC6 & SIM_SCGC6_SPI0) && newpinout != pinout) {
+			if ((newpinout & 2) == 0) {
+				CORE_PIN8_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+				CORE_PIN12_CONFIG = PORT_PCR_MUX(2);
+			} else {
+				CORE_PIN12_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+				CORE_PIN8_CONFIG = PORT_PCR_MUX(2);
+			}
+		}
+		pinout = newpinout;
 	}
 	inline void setSCK(uint8_t pin) __attribute__((always_inline)) {
-		if (pin == 13) pinout &= ~4;
-		if (pin == 14) pinout |= 4;
+		uint8_t newpinout = pinout;
+		if (pin == 13) newpinout &= ~4;
+		if (pin == 14) newpinout |= 4;
+		if ((SIM_SCGC6 & SIM_SCGC6_SPI0) && newpinout != pinout) {
+			if ((newpinout & 4) == 0) {
+				CORE_PIN14_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+				CORE_PIN13_CONFIG = PORT_PCR_DSE | PORT_PCR_MUX(2);
+			} else {
+				CORE_PIN13_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+				CORE_PIN14_CONFIG = PORT_PCR_MUX(2);
+			}
+		}
+		pinout = newpinout;
 	}
 	friend class SPSRemulation;
 	friend class SPIFIFOclass;
@@ -1039,12 +1072,260 @@ public:
 	}
 	inline void disable_pins(void) __attribute__((always_inline)) {
 		//serial_print("disable_pins\n");
-		CORE_PIN11_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
-		CORE_PIN12_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
-		CORE_PIN13_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+		if ((pinout & 1) == 0) {
+			CORE_PIN11_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+		} else {
+			CORE_PIN7_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+		}
+		if ((pinout & 2) == 0) {
+			CORE_PIN12_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+		} else {
+			CORE_PIN8_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+		}
+		if ((pinout & 4) == 0) {
+			CORE_PIN13_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+		} else {
+			CORE_PIN14_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+		}
 	}
 };
 extern SPCRemulation SPCR;
+
+#if defined(__MK64FX512__) || defined(__MK66FX1M0__)
+class SPCR1emulation
+{
+public:
+	inline SPCR1emulation & operator = (int val) __attribute__((always_inline)) {
+		uint32_t ctar, mcr, sim6;
+		//serial_print("SPCR=");
+		//serial_phex(val);
+		//serial_print("\n");
+		sim6 = SIM_SCGC6;
+		if (!(sim6 & SIM_SCGC6_SPI1)) {
+			//serial_print("init1\n");
+			SIM_SCGC6 = sim6 | SIM_SCGC6_SPI1;
+			SPI1_CTAR0 = SPI_CTAR_FMSZ(7) | SPI_CTAR_PBR(1) | SPI_CTAR_BR(1) | SPI_CTAR_CSSCK(1);
+		}
+		if (!(val & (1<<SPE))) {
+			SPI1_MCR |= SPI_MCR_MDIS; // TODO: use bitband for atomic access
+		}
+		ctar = SPI_CTAR_FMSZ(7) | SPI_CTAR_PBR(1);
+		if (val & (1<<DORD))  ctar |= SPI_CTAR_LSBFE;
+		if (val & (1<<CPOL))  ctar |= SPI_CTAR_CPOL;
+		if (val & (1<<CPHA)) {
+			ctar |= SPI_CTAR_CPHA;
+			if ((val & 3) == 0) {
+				ctar |= SPI_CTAR_BR(1) | SPI_CTAR_ASC(1);
+			} else if ((val & 3) == 1) {
+				ctar |= SPI_CTAR_BR(4) | SPI_CTAR_ASC(4);
+			} else if ((val & 3) == 2) {
+				ctar |= SPI_CTAR_BR(6) | SPI_CTAR_ASC(6);
+			} else {
+				ctar |= SPI_CTAR_BR(7) | SPI_CTAR_ASC(7);
+			}
+		} else {
+			if ((val & 3) == 0) {
+				ctar |= SPI_CTAR_BR(1) | SPI_CTAR_CSSCK(1);
+			} else if ((val & 3) == 1) {
+				ctar |= SPI_CTAR_BR(4) | SPI_CTAR_CSSCK(4);
+			} else if ((val & 3) == 2) {
+				ctar |= SPI_CTAR_BR(6) | SPI_CTAR_CSSCK(6);
+			} else {
+				ctar |= SPI_CTAR_BR(7) | SPI_CTAR_CSSCK(7);
+			}
+		}
+		ctar |= (SPI1_CTAR0 & SPI_CTAR_DBR);
+		update_ctar(ctar);
+		mcr = SPI_MCR_DCONF(0) | SPI_MCR_PCSIS(0x1F);
+		if (val & (1<<MSTR)) mcr |= SPI_MCR_MSTR;
+		if (val & (1<<SPE)) {
+			mcr &= ~(SPI_MCR_MDIS | SPI_MCR_HALT);
+			SPI1_MCR = mcr;
+			enable_pins();
+		} else {
+			mcr |= (SPI_MCR_MDIS | SPI_MCR_HALT);
+			SPI1_MCR = mcr;
+			disable_pins();
+		}
+		//serial_print("MCR:");
+		//serial_phex32(SPI1_MCR);
+		//serial_print(", CTAR0:");
+		//serial_phex32(SPI1_CTAR0);
+		//serial_print("\n");
+		return *this;
+	}
+	inline SPCR1emulation & operator |= (int val) __attribute__((always_inline)) {
+		uint32_t sim6;
+		//serial_print("SPCR |= ");
+		//serial_phex(val);
+		//serial_print("\n");
+		sim6 = SIM_SCGC6;
+		if (!(sim6 & SIM_SCGC6_SPI1)) {
+			//serial_print("init2\n");
+			SIM_SCGC6 = sim6 | SIM_SCGC6_SPI1;
+			SPI1_CTAR0 = SPI_CTAR_FMSZ(7) | SPI_CTAR_PBR(1) | SPI_CTAR_BR(1);
+		}
+		if (val & ((1<<DORD)|(1<<CPOL)|(1<<CPHA)|3)) {
+			uint32_t ctar = SPI1_CTAR0;
+			if (val & (1<<DORD)) ctar |= SPI_CTAR_LSBFE; // TODO: use bitband
+			if (val & (1<<CPOL)) ctar |= SPI_CTAR_CPOL;
+			if ((val & 3) == 1) {
+				// TODO: implement - is this ever really needed
+			} else if ((val & 3) == 2) {
+				// TODO: implement - is this ever really needed
+			} else if ((val & 3) == 3) {
+				// TODO: implement - is this ever really needed
+			}
+			if (val & (1<<CPHA) && !(ctar & SPI_CTAR_CPHA)) {
+				ctar |= SPI_CTAR_CPHA;
+				// TODO: clear SPI_CTAR_CSSCK, set SPI_CTAR_ASC
+			}
+			update_ctar(ctar);
+		}
+		if (val & (1<<MSTR)) SPI1_MCR |= SPI_MCR_MSTR;
+		if (val & (1<<SPE)) {
+			SPI1_MCR &= ~(SPI_MCR_MDIS | SPI_MCR_HALT);
+			enable_pins();
+		}
+		//serial_print("MCR:");
+		//serial_phex32(SPI1_MCR);
+		//serial_print(", CTAR0:");
+		//serial_phex32(SPI1_CTAR0);
+		//serial_print("\n");
+		return *this;
+	}
+	inline SPCR1emulation & operator &= (int val) __attribute__((always_inline)) {
+		//serial_print("SPCR &= ");
+		//serial_phex(val);
+		//serial_print("\n");
+		SIM_SCGC6 |= SIM_SCGC6_SPI1;
+		if (!(val & (1<<SPE))) {
+			SPI1_MCR |= (SPI_MCR_MDIS | SPI_MCR_HALT);
+			disable_pins();
+		}
+		if ((val & ((1<<DORD)|(1<<CPOL)|(1<<CPHA)|3)) != ((1<<DORD)|(1<<CPOL)|(1<<CPHA)|3)) {
+			uint32_t ctar = SPI1_CTAR0;
+			if (!(val & (1<<DORD))) ctar &= ~SPI_CTAR_LSBFE; // TODO: use bitband
+			if (!(val & (1<<CPOL))) ctar &= ~SPI_CTAR_CPOL;
+			if ((val & 3) == 0) {
+				// TODO: implement - is this ever really needed
+			} else if ((val & 3) == 1) {
+				// TODO: implement - is this ever really needed
+			} else if ((val & 3) == 2) {
+				// TODO: implement - is this ever really needed
+			}
+			if (!(val & (1<<CPHA)) && (ctar & SPI_CTAR_CPHA)) {
+				ctar &= ~SPI_CTAR_CPHA;
+				// TODO: set SPI_CTAR_ASC, clear SPI_CTAR_CSSCK
+			}
+			update_ctar(ctar);
+		}
+		if (!(val & (1<<MSTR))) SPI1_MCR &= ~SPI_MCR_MSTR;
+		return *this;
+	}
+	inline int operator & (int val) const __attribute__((always_inline)) {
+		int ret = 0;
+		//serial_print("SPCR & ");
+		//serial_phex(val);
+		//serial_print(" MCR:");
+		//serial_phex32(SPI1_MCR);
+		//serial_print(", CTAR0:");
+		//serial_phex32(SPI1_CTAR0);
+		//serial_print("\n");
+
+		//serial_print("\n");
+		SIM_SCGC6 |= SIM_SCGC6_SPI1;
+		if ((val & (1<<DORD)) && (SPI1_CTAR0 & SPI_CTAR_LSBFE)) ret |= (1<<DORD);
+		if ((val & (1<<CPOL)) && (SPI1_CTAR0 & SPI_CTAR_CPOL)) ret |= (1<<CPOL);
+		if ((val & (1<<CPHA)) && (SPI1_CTAR0 & SPI_CTAR_CPHA)) ret |= (1<<CPHA);
+		if ((val & 3) == 3) {
+			uint32_t dbr = SPI1_CTAR0 & 15;
+			if (dbr <= 1) {
+			} else if (dbr <= 4) {
+				ret |= (1<<SPR0);
+			} else if (dbr <= 6) {
+				ret |= (1<<SPR1);
+			} else {
+				ret |= (1<<SPR1)|(1<<SPR0);
+			}
+		} else if ((val & 3) == 1) {
+			// TODO: implement - is this ever really needed
+		} else if ((val & 3) == 2) {
+			// TODO: implement - is this ever really needed
+		}
+		if (val & (1<<SPE) && (!(SPI1_MCR & SPI_MCR_MDIS))) ret |= (1<<SPE);
+		if (val & (1<<MSTR) && (SPI1_MCR & SPI_MCR_MSTR)) ret |= (1<<MSTR);
+		//serial_print("ret = ");
+		//serial_phex(ret);
+		//serial_print("\n");
+		return ret;
+	}
+	inline void setMOSI(uint8_t pin) __attribute__((always_inline)) {
+		if (pin == 0) pinout &= ~1; // MOSI1 = 0  (PTB16)
+		if (pin == 21) pinout |= 1; // MOSI1 = 21 (PTD6)
+	}
+	inline void setMISO(uint8_t pin) __attribute__((always_inline)) {
+		if (pin == 1) pinout &= ~2; // MISO1 = 1  (PTB17)
+		if (pin == 5) pinout |= 2;  // MISO1 = 5  (PTD7)
+	}
+	inline void setSCK(uint8_t pin) __attribute__((always_inline)) {
+		if (pin == 20) pinout &= ~4; // SCK = 20  (PTD5)
+		if (pin == 32) pinout |= 4;  // MISO1 = 32  (PTB11)
+	}
+	inline void enable_pins(void) __attribute__((always_inline)) {
+		//serial_print("enable_pins\n");
+		if ((pinout & 1) == 0) {
+			CORE_PIN0_CONFIG = PORT_PCR_MUX(2);  // MOSI1 = 0  (PTB16)
+		} else {
+			CORE_PIN21_CONFIG = PORT_PCR_MUX(7); // MOSI1 = 21 (PTD6)
+		}
+		if ((pinout & 2) == 0) {
+			CORE_PIN1_CONFIG = PORT_PCR_MUX(2);  // MISO1 = 1  (PTB17)
+		} else {
+			CORE_PIN5_CONFIG = PORT_PCR_MUX(7);  // MISO1 = 5  (PTD7)
+		}
+		if ((pinout & 4) == 0) {
+			CORE_PIN20_CONFIG = PORT_PCR_MUX(7); // SCK1 = 20 (PTD5)
+		} else {
+			CORE_PIN32_CONFIG = PORT_PCR_MUX(2);  // MISO1 = 5  (PTD7)
+		}
+	}
+	inline void disable_pins(void) __attribute__((always_inline)) {
+		//serial_print("disable_pins\n");
+		if ((pinout & 1) == 0) {
+			CORE_PIN0_CONFIG = PORT_PCR_SRE | PORT_PCR_MUX(1);
+		} else {
+			CORE_PIN21_CONFIG = PORT_PCR_SRE | PORT_PCR_MUX(1);
+		}
+		if ((pinout & 2) == 0) {
+			CORE_PIN1_CONFIG = PORT_PCR_SRE | PORT_PCR_MUX(1);
+		} else {
+			CORE_PIN5_CONFIG = PORT_PCR_SRE | PORT_PCR_MUX(1);
+		}
+		if ((pinout & 4) == 0) {
+			CORE_PIN20_CONFIG = PORT_PCR_SRE | PORT_PCR_MUX(1); // SCK1 = 20 (PTD5)
+		} else {
+			CORE_PIN32_CONFIG = PORT_PCR_SRE | PORT_PCR_MUX(1);  // MISO1 = 5  (PTD7)
+		}
+	}
+	friend class SPIFIFO1class;
+private:
+	static uint8_t pinout;
+	static inline void update_ctar(uint32_t ctar) __attribute__((always_inline)) {
+		if (SPI1_CTAR0 == ctar) return;
+		uint32_t mcr = SPI1_MCR;
+		if (mcr & SPI_MCR_MDIS) {
+			SPI1_CTAR0 = ctar;
+		} else {
+			SPI1_MCR = mcr | SPI_MCR_MDIS | SPI_MCR_HALT;
+			SPI1_CTAR0 = ctar;
+			SPI1_MCR = mcr;
+		}
+	}
+};
+extern SPCR1emulation SPCR1;
+
+#endif
 
 class SPSRemulation
 {
@@ -1281,16 +1562,49 @@ public:
 		return ret;
 	}
 	inline void setMOSI(uint8_t pin) __attribute__((always_inline)) {
-		if (pin == 11) pinout &= ~1;
-		if (pin == 7) pinout |= 1;
+		uint8_t newpinout = pinout;
+		if (pin == 11) newpinout &= ~1;
+		if (pin == 7) newpinout |= 1;
+		if ((SIM_SCGC4 & SIM_SCGC4_SPI0) && newpinout != pinout) {
+			if ((newpinout & 1) == 0) {
+				CORE_PIN7_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+				CORE_PIN11_CONFIG = PORT_PCR_DSE | PORT_PCR_MUX(2);
+			} else {
+				CORE_PIN11_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+				CORE_PIN7_CONFIG = PORT_PCR_MUX(2);
+			}
+		}
+		pinout = newpinout;
 	}
 	inline void setMISO(uint8_t pin) __attribute__((always_inline)) {
-		if (pin == 12) pinout &= ~2;
-		if (pin == 8) pinout |= 2;
+		uint8_t newpinout = pinout;
+		if (pin == 12) newpinout &= ~2;
+		if (pin == 8) newpinout |= 2;
+		if ((SIM_SCGC4 & SIM_SCGC4_SPI0) && newpinout != pinout) {
+			if ((newpinout & 2) == 0) {
+				CORE_PIN8_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+				CORE_PIN12_CONFIG = PORT_PCR_MUX(2);
+			} else {
+				CORE_PIN12_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+				CORE_PIN8_CONFIG = PORT_PCR_MUX(2);
+			}
+		}
+		pinout = newpinout;
 	}
 	inline void setSCK(uint8_t pin) __attribute__((always_inline)) {
-		if (pin == 13) pinout &= ~4;
-		if (pin == 14) pinout |= 4;
+		uint8_t newpinout = pinout;
+		if (pin == 13) newpinout &= ~4;
+		if (pin == 14) newpinout |= 4;
+		if ((SIM_SCGC4 & SIM_SCGC4_SPI0) && newpinout != pinout) {
+			if ((newpinout & 4) == 0) {
+				CORE_PIN14_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+				CORE_PIN13_CONFIG = PORT_PCR_DSE | PORT_PCR_MUX(2);
+			} else {
+				CORE_PIN13_CONFIG = PORT_PCR_SRE | PORT_PCR_DSE | PORT_PCR_MUX(1);
+				CORE_PIN14_CONFIG = PORT_PCR_MUX(2);
+			}
+		}
+		pinout = newpinout;
 	}
 	friend class SPSRemulation;
 	friend class SPIFIFOclass;
@@ -1475,18 +1789,27 @@ public:
 extern SREGemulation SREG;
 
 
-		// 22211  
+		// 22211
 		// 84062840
-		// 322111 
+		// 322111
 		// 17395173
+#if defined(__MK20DX128__) || defined(__MK20DX256__) || defined(__MK64FX512__) || defined(__MK66FX1M0__)
+
 #if defined(__MK20DX128__) || defined(__MK20DX256__)
 #define EIMSK_pA 0x01000018 // pins 3, 4, 24
 #define EIMSK_pB 0x020F0003 // pins 0, 1, 16-19, 25
 #define EIMSK_pC 0x78C0BE00 // pins 9-13, 15, 22, 23, 27-30
 #define EIMSK_pD 0x003041E4 // pins 2, 5-8, 14, 20, 21
 #define EIMSK_pE 0x84000000 // pins 26, 31
+#elif defined(__MK64FX512__) || defined(__MK66FX1M0__)
+#define EIMSK_pA 0x1E000018 // pins 3, 4, 25-28
+#define EIMSK_pB 0xE00F0003 // pins 0, 1, 16-19, 29-31
+#define EIMSK_pC 0x00C0BE00 // pins 9-13, 15, 22, 23
+#define EIMSK_pD 0x003041E4 // pins 2, 5-8, 14, 20, 21
+#define EIMSK_pE 0x01000000 // pins 24
+#endif
 
-class EIMSKemulation  // used by Adafruit_nRF8001
+class EIMSKemulation  // used by Adafruit_nRF8001 (only supports INT for pins 0 to 31)
 {
 public:
 	operator int () const __attribute__((always_inline)) {

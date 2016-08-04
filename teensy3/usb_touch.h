@@ -28,22 +28,45 @@
  * SOFTWARE.
  */
 
+#ifndef USBtouchscreen_h_
+#define USBtouchscreen_h_
 
-#include "avr_emulation.h"
-#include "SPIFIFO.h"
+#include "usb_desc.h"
 
-uint8_t SPCRemulation::pinout = 0;
-#if defined(KINETISL)
-uint8_t SPCR1emulation::pinout = 0;
+#if defined(MULTITOUCH_INTERFACE)
+
+#include <inttypes.h>
+
+// C language implementation
+#ifdef __cplusplus
+extern "C" {
 #endif
-#if defined(__MK64FX512__) || defined(__MK66FX1M0__)
-uint8_t SPCR1emulation::pinout = 0;
-#endif
-#ifdef HAS_SPIFIFO
-
-uint8_t SPIFIFOclass::pcs = 0;
-volatile uint8_t * SPIFIFOclass::reg = 0;
-
+void usb_touchscreen_press(uint8_t finger, uint32_t x, uint32_t y, uint32_t pressure);
+void usb_touchscreen_release(uint8_t finger);
+void usb_touchscreen_update_callback(void);
+#ifdef __cplusplus
+}
 #endif
 
+// C++ interface
+#ifdef __cplusplus
+class usb_touchscreen_class
+{
+        public:
+        void begin(void) { }
+        void end(void) { }
+	void press(uint8_t finger, uint32_t x, uint32_t y, uint32_t pressure=128) {
+		usb_touchscreen_press(finger, x, y, pressure);
+	}
+	void release(uint8_t finger) {
+		usb_touchscreen_release(finger);
+	}
+};
+extern usb_touchscreen_class TouchscreenUSB;
+
+#endif // __cplusplus
+
+#endif // MULTITOUCH_INTERFACE
+
+#endif // USBtouchscreen_h_
 

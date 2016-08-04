@@ -28,22 +28,46 @@
  * SOFTWARE.
  */
 
+#ifndef USB_MTP_h_
+#define USB_MTP_h_
 
-#include "avr_emulation.h"
-#include "SPIFIFO.h"
+#include "usb_desc.h"
 
-uint8_t SPCRemulation::pinout = 0;
-#if defined(KINETISL)
-uint8_t SPCR1emulation::pinout = 0;
-#endif
-#if defined(__MK64FX512__) || defined(__MK66FX1M0__)
-uint8_t SPCR1emulation::pinout = 0;
-#endif
-#ifdef HAS_SPIFIFO
+#if defined(MTP_INTERFACE)
 
-uint8_t SPIFIFOclass::pcs = 0;
-volatile uint8_t * SPIFIFOclass::reg = 0;
+#include <inttypes.h>
 
+
+// C language implementation
+#ifdef __cplusplus
+extern "C" {
 #endif
 
+void usb_mtp_update(void);
+
+#ifdef __cplusplus
+}
+#endif
+
+// C++ interface
+#ifdef __cplusplus
+class usb_mpt_class
+{
+        public:
+        void begin(void) { }
+        void end(void) { }
+        void update() __attribute__((always_inline)) {
+		usb_mtp_update();
+	}
+	private:
+};
+
+extern usb_mpt_class MTPDisk;
+
+
+#endif // __cplusplus
+
+#endif // MTP_INTERFACE
+
+#endif // USB_MTP_h_
 

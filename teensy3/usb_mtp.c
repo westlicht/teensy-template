@@ -1,6 +1,6 @@
 /* Teensyduino Core Library
  * http://www.pjrc.com/teensy/
- * Copyright (c) 2013 PJRC.COM, LLC.
+ * Copyright (c) 2015 PJRC.COM, LLC.
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -28,22 +28,24 @@
  * SOFTWARE.
  */
 
+#include "usb_dev.h"
+#include "usb_mtp.h"
+#include "core_pins.h" // for yield()
+#include "HardwareSerial.h"
 
-#include "avr_emulation.h"
-#include "SPIFIFO.h"
+#ifdef MTP_INTERFACE // defined by usb_dev.h -> usb_desc.h
+#if F_CPU >= 20000000
 
-uint8_t SPCRemulation::pinout = 0;
-#if defined(KINETISL)
-uint8_t SPCR1emulation::pinout = 0;
-#endif
-#if defined(__MK64FX512__) || defined(__MK66FX1M0__)
-uint8_t SPCR1emulation::pinout = 0;
-#endif
-#ifdef HAS_SPIFIFO
+void usb_mtp_update(void)
+{
+	serial_print("test\n");
 
-uint8_t SPIFIFOclass::pcs = 0;
-volatile uint8_t * SPIFIFOclass::reg = 0;
-
-#endif
+	// TODO: a lot of work here....
 
 
+
+}
+
+
+#endif // F_CPU
+#endif // MTP_INTERFACE
