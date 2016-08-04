@@ -27,11 +27,14 @@ BUILDDIR = $(abspath $(CURDIR)/build)
 TOOLSPATH = $(CURDIR)/tools
 
 ifeq ($(OS),Windows_NT)
-    $(error What is Win Dose?)
+    $(error No support for windows)
 else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Darwin)
-        TOOLSPATH = /Applications/Arduino.app/Contents/Java/hardware/tools/
+		TOOLSPATH = $(CURDIR)/tools-osx
+    endif
+    ifeq ($(UNAME_S),Linux)
+		TOOLSPATH = $(CURDIR)/tools-linux
     endif
 endif
 
