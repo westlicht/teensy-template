@@ -1,0 +1,543 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:eurocad
+LIBS:teensy_3.1
+LIBS:teensy
+LIBS:tft
+LIBS:mainboard-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L PJ301M-12 IN1
+U 1 1 57A606FC
+P 1100 900
+F 0 "IN1" H 750 700 50  0000 C CNN
+F 1 "PJ301M-12" H 950 1150 50  0000 C CNN
+F 2 "Eurocad:PJ301M-12" H 1100 900 50  0001 C CNN
+F 3 "" H 1100 900 50  0000 C CNN
+	1    1100 900 
+	1    0    0    -1  
+$EndComp
+$Comp
+L PJ301M-12 OUT1
+U 1 1 57A60751
+P 1100 1500
+F 0 "OUT1" H 750 1300 50  0000 C CNN
+F 1 "PJ301M-12" H 950 1750 50  0000 C CNN
+F 2 "Choke_Axial_ThroughHole:Choke_Horizontal_RM10mm" H 1100 1500 50  0001 C CNN
+F 3 "" H 1100 1500 50  0000 C CNN
+	1    1100 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L PJ301M-12 IN2
+U 1 1 57A60777
+P 1100 2100
+F 0 "IN2" H 750 1900 50  0000 C CNN
+F 1 "PJ301M-12" H 950 2350 50  0000 C CNN
+F 2 "Eurocad:PJ301M-12" H 1100 2100 50  0001 C CNN
+F 3 "" H 1100 2100 50  0000 C CNN
+	1    1100 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L PJ301M-12 OUT2
+U 1 1 57A6079A
+P 1100 2700
+F 0 "OUT2" H 750 2500 50  0000 C CNN
+F 1 "PJ301M-12" H 950 2950 50  0000 C CNN
+F 2 "Eurocad:PJ301M-12" H 1100 2700 50  0001 C CNN
+F 3 "" H 1100 2700 50  0000 C CNN
+	1    1100 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L PJ301M-12 IN3
+U 1 1 57A607BB
+P 1100 3300
+F 0 "IN3" H 750 3100 50  0000 C CNN
+F 1 "PJ301M-12" H 950 3550 50  0000 C CNN
+F 2 "Eurocad:PJ301M-12" H 1100 3300 50  0001 C CNN
+F 3 "" H 1100 3300 50  0000 C CNN
+	1    1100 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L PJ301M-12 OUT3
+U 1 1 57A60812
+P 1100 3900
+F 0 "OUT3" H 750 3700 50  0000 C CNN
+F 1 "PJ301M-12" H 950 4150 50  0000 C CNN
+F 2 "Eurocad:PJ301M-12" H 1100 3900 50  0001 C CNN
+F 3 "" H 1100 3900 50  0000 C CNN
+	1    1100 3900
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR01
+U 1 1 57A60A84
+P 1700 4200
+F 0 "#PWR01" H 1700 3950 50  0001 C CNN
+F 1 "GND" H 1700 4050 50  0000 C CNN
+F 2 "" H 1700 4200 50  0000 C CNN
+F 3 "" H 1700 4200 50  0000 C CNN
+	1    1700 4200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1700 750  1700 4250
+Wire Wire Line
+	1700 3750 1550 3750
+Wire Wire Line
+	1700 3150 1550 3150
+Connection ~ 1700 3750
+Wire Wire Line
+	1700 2550 1550 2550
+Connection ~ 1700 3150
+Wire Wire Line
+	1700 1950 1550 1950
+Connection ~ 1700 2550
+Wire Wire Line
+	1700 1350 1550 1350
+Connection ~ 1700 1950
+Wire Wire Line
+	1700 750  1550 750 
+Connection ~ 1700 1350
+Wire Wire Line
+	1550 1000 2200 1000
+Wire Wire Line
+	1900 1000 1900 1600
+Wire Wire Line
+	1900 1600 1550 1600
+Connection ~ 1900 1000
+Wire Wire Line
+	1550 2200 2200 2200
+Wire Wire Line
+	1900 2200 1900 2800
+Wire Wire Line
+	1900 2800 1550 2800
+Connection ~ 1900 2200
+Wire Wire Line
+	1550 3400 2200 3400
+Wire Wire Line
+	1900 3400 1900 4000
+Wire Wire Line
+	1900 4000 1550 4000
+Connection ~ 1900 3400
+$Comp
+L TL1105SPF250Q SW1
+U 1 1 57A60D0E
+P 1200 4900
+F 0 "SW1" H 1500 4950 50  0000 C CNN
+F 1 "TL1105SPF250Q" H 1500 4850 50  0000 C CNN
+F 2 "Eurocad:TL1105SPF250Q" H 1200 4900 50  0001 C CNN
+F 3 "" H 1200 4900 50  0000 C CNN
+	1    1200 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L TL1105SPF250Q SW2
+U 1 1 57A633F9
+P 1200 5600
+F 0 "SW2" H 1500 5650 50  0000 C CNN
+F 1 "TL1105SPF250Q" H 1500 5550 50  0000 C CNN
+F 2 "Eurocad:TL1105SPF250Q" H 1200 5600 50  0001 C CNN
+F 3 "" H 1200 5600 50  0000 C CNN
+	1    1200 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L TL1105SPF250Q SW3
+U 1 1 57A63452
+P 1200 6300
+F 0 "SW3" H 1500 6350 50  0000 C CNN
+F 1 "TL1105SPF250Q" H 1500 6250 50  0000 C CNN
+F 2 "Eurocad:TL1105SPF250Q" H 1200 6300 50  0001 C CNN
+F 3 "" H 1200 6300 50  0000 C CNN
+	1    1200 6300
+	1    0    0    -1  
+$EndComp
+$Comp
+L TL1105SPF250Q SW4
+U 1 1 57A634DE
+P 1200 7000
+F 0 "SW4" H 1500 7050 50  0000 C CNN
+F 1 "TL1105SPF250Q" H 1500 6950 50  0000 C CNN
+F 2 "Eurocad:TL1105SPF250Q" H 1200 7000 50  0001 C CNN
+F 3 "" H 1200 7000 50  0000 C CNN
+	1    1200 7000
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR02
+U 1 1 57A6359F
+P 700 7400
+F 0 "#PWR02" H 700 7150 50  0001 C CNN
+F 1 "GND" H 700 7250 50  0000 C CNN
+F 2 "" H 700 7400 50  0000 C CNN
+F 3 "" H 700 7400 50  0000 C CNN
+	1    700  7400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	700  4700 700  7400
+Wire Wire Line
+	700  4700 900  4700
+Wire Wire Line
+	900  5100 700  5100
+Connection ~ 700  5100
+Wire Wire Line
+	900  5400 700  5400
+Connection ~ 700  5400
+Wire Wire Line
+	900  5800 700  5800
+Connection ~ 700  5800
+Wire Wire Line
+	900  6100 700  6100
+Wire Wire Line
+	700  6100 700  6150
+Connection ~ 700  6150
+Wire Wire Line
+	900  6500 700  6500
+Connection ~ 700  6500
+Wire Wire Line
+	900  6800 700  6800
+Connection ~ 700  6800
+Wire Wire Line
+	900  7200 700  7200
+Connection ~ 700  7200
+Text GLabel 2200 2200 2    60   Input ~ 0
+IN_B
+Text GLabel 2200 1000 2    60   Input ~ 0
+IN_A
+Text GLabel 2200 3400 2    60   Input ~ 0
+IN_T
+Wire Wire Line
+	1500 4700 2300 4700
+Wire Wire Line
+	1500 5400 2300 5400
+Wire Wire Line
+	1500 6100 2300 6100
+Wire Wire Line
+	1500 6800 2300 6800
+Text GLabel 2300 5400 2    60   Input ~ 0
+SW_2
+Text GLabel 2300 6100 2    60   Input ~ 0
+SW_3
+Text GLabel 2300 6800 2    60   Input ~ 0
+SW_4
+Text GLabel 2300 4700 2    60   Input ~ 0
+SW_1
+$Comp
+L Teensy3.2 U1
+U 1 1 57A63D8A
+P 5300 2900
+F 0 "U1" H 5300 4900 60  0000 C CNN
+F 1 "Teensy3.2" H 5300 900 60  0000 C CNN
+F 2 "Teensy:Teensy3.x_LC" H 5300 2600 60  0001 C CNN
+F 3 "" H 5300 2600 60  0000 C CNN
+	1    5300 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L TFT01-1.8SP U2
+U 1 1 57A64EDF
+P 8750 2200
+F 0 "U2" H 8750 2800 60  0000 C CNN
+F 1 "TFT01-1.8SP" H 8750 1700 60  0000 C CNN
+F 2 "tft:TFT01-1.8SP" H 10150 3100 60  0001 C CNN
+F 3 "" H 10150 3100 60  0000 C CNN
+	1    8750 2200
+	1    0    0    -1  
+$EndComp
+Text GLabel 4300 2900 0    60   Input ~ 0
+MOSI
+Text GLabel 4300 3050 0    60   Input ~ 0
+MISO
+Text GLabel 4300 3800 0    60   Input ~ 0
+SCK
+Text GLabel 9350 2100 2    60   Input ~ 0
+MOSI
+Text GLabel 9350 2200 2    60   Input ~ 0
+MISO
+Text GLabel 9350 2300 2    60   Input ~ 0
+SCK
+Text GLabel 8150 2400 0    60   Input ~ 0
+SCK
+$Comp
+L GND #PWR03
+U 1 1 57A65B0A
+P 7750 1900
+F 0 "#PWR03" H 7750 1650 50  0001 C CNN
+F 1 "GND" H 7750 1750 50  0000 C CNN
+F 2 "" H 7750 1900 50  0000 C CNN
+F 3 "" H 7750 1900 50  0000 C CNN
+	1    7750 1900
+	0    1    1    0   
+$EndComp
+Text GLabel 8150 1800 0    60   Input ~ 0
+3.3V
+Text GLabel 8150 2000 0    60   Input ~ 0
+LCD_CS
+Wire Wire Line
+	7750 1900 8150 1900
+Text GLabel 8150 2100 0    60   Input ~ 0
+LCD_RESET
+Text GLabel 9350 2000 2    60   Input ~ 0
+SD_CS
+$Comp
+L EURO_PWR_2x5 J1
+U 1 1 57A66362
+P 9850 6000
+F 0 "J1" H 9850 5700 60  0000 C CNN
+F 1 "EURO_PWR_2x5" H 9850 6300 60  0000 C CNN
+F 2 "Socket_Strips:Socket_Strip_Straight_2x05" H 9850 6000 60  0001 C CNN
+F 3 "" H 9850 6000 60  0000 C CNN
+	1    9850 6000
+	1    0    0    -1  
+$EndComp
+Text GLabel 10300 5800 2    60   Input ~ 0
++12V_INLET
+Text GLabel 9400 5800 0    60   Input ~ 0
++12V_INLET
+Text GLabel 10300 6200 2    60   Input ~ 0
+-12V_INLET
+Text GLabel 9400 6200 0    60   Input ~ 0
+-12V_INLET
+$Comp
+L GND #PWR04
+U 1 1 57A668AE
+P 10400 6000
+F 0 "#PWR04" H 10400 5750 50  0001 C CNN
+F 1 "GND" H 10400 5850 50  0000 C CNN
+F 2 "" H 10400 6000 50  0000 C CNN
+F 3 "" H 10400 6000 50  0000 C CNN
+	1    10400 6000
+	0    -1   -1   0   
+$EndComp
+$Comp
+L GND #PWR05
+U 1 1 57A668DC
+P 9300 6000
+F 0 "#PWR05" H 9300 5750 50  0001 C CNN
+F 1 "GND" H 9300 5850 50  0000 C CNN
+F 2 "" H 9300 6000 50  0000 C CNN
+F 3 "" H 9300 6000 50  0000 C CNN
+	1    9300 6000
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	9400 5900 9350 5900
+Wire Wire Line
+	9350 5900 9350 6100
+Wire Wire Line
+	9350 6100 9400 6100
+Wire Wire Line
+	9300 6000 9400 6000
+Connection ~ 9350 6000
+Wire Wire Line
+	10300 5900 10350 5900
+Wire Wire Line
+	10350 5900 10350 6100
+Wire Wire Line
+	10350 6100 10300 6100
+Wire Wire Line
+	10300 6000 10400 6000
+Connection ~ 10350 6000
+Text Notes 9550 5550 0    60   ~ 0
+POWER INLET
+Wire Notes Line
+	8700 5400 11000 5400
+Wire Notes Line
+	11000 5400 11000 6400
+Wire Notes Line
+	11000 6400 8700 6400
+Wire Notes Line
+	8700 6400 8700 5400
+$Comp
+L D D1
+U 1 1 57A6727E
+P 9750 4400
+F 0 "D1" H 9750 4500 50  0000 C CNN
+F 1 "1N4001" H 9750 4300 50  0000 C CNN
+F 2 "Diodes_ThroughHole:Diode_DO-41_SOD81_Horizontal_RM10" H 9750 4400 50  0001 C CNN
+F 3 "" H 9750 4400 50  0000 C CNN
+	1    9750 4400
+	0    1    1    0   
+$EndComp
+$Comp
+L D D2
+U 1 1 57A672C4
+P 9750 4800
+F 0 "D2" H 9750 4900 50  0000 C CNN
+F 1 "1N4001" H 9750 4700 50  0000 C CNN
+F 2 "Diodes_ThroughHole:Diode_DO-41_SOD81_Horizontal_RM10" H 9750 4800 50  0001 C CNN
+F 3 "" H 9750 4800 50  0000 C CNN
+	1    9750 4800
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	9750 4550 9750 4650
+$Comp
+L GND #PWR06
+U 1 1 57A67536
+P 9850 4600
+F 0 "#PWR06" H 9850 4350 50  0001 C CNN
+F 1 "GND" H 9850 4450 50  0000 C CNN
+F 2 "" H 9850 4600 50  0000 C CNN
+F 3 "" H 9850 4600 50  0000 C CNN
+	1    9850 4600
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	9850 4600 9750 4600
+Connection ~ 9750 4600
+Wire Wire Line
+	9550 4250 9850 4250
+Wire Wire Line
+	9550 4950 9850 4950
+Text GLabel 9550 4250 0    60   Input ~ 0
++12V_INLET
+Text GLabel 9550 4950 0    60   Input ~ 0
+-12V_INLET
+$Comp
+L INDUCTOR L1
+U 1 1 57A6790E
+P 10150 4250
+F 0 "L1" V 10100 4250 50  0000 C CNN
+F 1 "BL01RN1A" V 10250 4250 50  0000 C CNN
+F 2 "Choke_Axial_ThroughHole:Choke_Horizontal_RM10mm" H 10150 4250 50  0001 C CNN
+F 3 "" H 10150 4250 50  0000 C CNN
+	1    10150 4250
+	0    1    1    0   
+$EndComp
+$Comp
+L INDUCTOR L2
+U 1 1 57A6796C
+P 10150 4950
+F 0 "L2" V 10100 4950 50  0000 C CNN
+F 1 "BL01RN1A" V 10250 4950 50  0000 C CNN
+F 2 "Choke_Axial_ThroughHole:Choke_Horizontal_RM10mm" H 10150 4950 50  0001 C CNN
+F 3 "" H 10150 4950 50  0000 C CNN
+	1    10150 4950
+	0    1    1    0   
+$EndComp
+Connection ~ 9750 4250
+Connection ~ 9750 4950
+Text GLabel 10450 4250 2    60   Input ~ 0
++12V
+Text GLabel 10450 4950 2    60   Input ~ 0
+-12V
+Text GLabel 4300 1550 0    60   Input ~ 0
+SW_4
+Text GLabel 4300 1700 0    60   Input ~ 0
+SW_3
+Text GLabel 4300 1850 0    60   Input ~ 0
+SW_2
+Text GLabel 4300 2000 0    60   Input ~ 0
+SW_1
+Wire Wire Line
+	1600 4700 1600 5100
+Wire Wire Line
+	1600 5100 1500 5100
+Connection ~ 1600 4700
+Wire Wire Line
+	1600 5400 1600 5800
+Wire Wire Line
+	1600 5800 1500 5800
+Connection ~ 1600 5400
+Wire Wire Line
+	1600 6100 1600 6500
+Wire Wire Line
+	1600 6500 1500 6500
+Connection ~ 1600 6100
+Wire Wire Line
+	1600 6800 1600 7200
+Wire Wire Line
+	1600 7200 1500 7200
+Connection ~ 1600 6800
+$Comp
+L TL074 U3
+U 1 1 57A69018
+P 3000 1100
+F 0 "U3" H 3050 1300 50  0000 C CNN
+F 1 "TL074" H 3150 900 50  0000 C CNN
+F 2 "Housings_DIP:DIP-14_W7.62mm_LongPads" H 2950 1200 50  0001 C CNN
+F 3 "" H 3050 1300 50  0000 C CNN
+	1    3000 1100
+	1    0    0    -1  
+$EndComp
+$Comp
+L TL074 U3
+U 2 1 57A69073
+P 3000 1850
+F 0 "U3" H 3050 2050 50  0000 C CNN
+F 1 "TL074" H 3150 1650 50  0000 C CNN
+F 2 "Housings_DIP:DIP-14_W7.62mm_LongPads" H 2950 1950 50  0001 C CNN
+F 3 "" H 3050 2050 50  0000 C CNN
+	2    3000 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L TL074 U3
+U 3 1 57A690AE
+P 3000 2550
+F 0 "U3" H 3050 2750 50  0000 C CNN
+F 1 "TL074" H 3150 2350 50  0000 C CNN
+F 2 "Housings_DIP:DIP-14_W7.62mm_LongPads" H 2950 2650 50  0001 C CNN
+F 3 "" H 3050 2750 50  0000 C CNN
+	3    3000 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L TL074 U3
+U 4 1 57A690FC
+P 3000 3300
+F 0 "U3" H 3050 3500 50  0000 C CNN
+F 1 "TL074" H 3150 3100 50  0000 C CNN
+F 2 "Housings_DIP:DIP-14_W7.62mm_LongPads" H 2950 3400 50  0001 C CNN
+F 3 "" H 3050 3500 50  0000 C CNN
+	4    3000 3300
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
