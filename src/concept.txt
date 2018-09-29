@@ -1,0 +1,25 @@
+
+Modes:
+
+- Oscilloscope
+    - Single
+    - Layered
+    - Stacked
+    - 3D
+    - X/Y
+
+    - Configuration options
+        - Timebase
+        - Trigger mode
+        - Range
+
+- Levels
+    - Raw
+    - VV/Peak
+    - Numeric
+
+- Frequency
+    - Tuner
+    - Spectogram
+    - Spectrum
+    - BPM

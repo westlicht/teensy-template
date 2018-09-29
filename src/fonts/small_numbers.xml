@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data name="small_numbers" type="font">
+    <family>Pixel Millennium</family>
+    <size>8</size>
+    <ascent>7</ascent>
+    <descent>1</descent>
+    <style>Normal</style>
+    <widthType>proportional</widthType>
+    <antialiasing>false</antialiasing>
+    <foreground>ff000000</foreground>
+    <background>ffffffff</background>
+    <string> +-.0123456789</string>
+    <converted>C:/Users/freak/Desktop/small_numbers.c</converted>
+    <chars>
+        <char character=" " code="0020">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAMAAAAFCAYAAACAcVaiAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAFUlEQVQImWP8////fwYoYGJAAkRyAPqMBAa4379YAAAAAElFTkSuQmCC</picture>
+        </char>
+        <char character="+" code="002b">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAIAAADtz9qMAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAI0lEQVQImWP8//8/AwwwMTAwMDIyMqCB////M0GUQUhGZD0AsBcO+2P4ng4AAAAASUVORK5CYII=</picture>
+        </char>
+        <char character="-" code="002d">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAIAAADtz9qMAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAGUlEQVQImWP8//8/AwwwMWAF////Z8SpDABY1Aj+BJ5qhQAAAABJRU5ErkJggg==</picture>
+        </char>
+        <char character="." code="002e">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAHUlEQVQImW3GoQEAAAgDIOb/P89ilETaFsZ5kgQsqnkECaecYW8AAAAASUVORK5CYII=</picture>
+        </char>
+        <char character="0" code="0030">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAYAAABirU3bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAI0lEQVQImWNkYGD4zwAF////Z2CCMWCAiQENYBdgZGSECwAA4E4HBqIw+98AAAAASUVORK5CYII=</picture>
+        </char>
+        <char character="1" code="0031">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAMAAAAFCAYAAACAcVaiAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAJElEQVQImVXJMQ4AMAyDQOz//5kObaSU7QSqgKpNwtQ7Hlh9OHt9DACR38gLAAAAAElFTkSuQmCC</picture>
+        </char>
+        <char character="2" code="0032">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAYAAABirU3bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAKUlEQVQImV3MwQkAMAzDQLlk/5XVTxNC7ymMA8ijclR0GpWErXra8n9cEEcQ/6/fa6oAAAAASUVORK5CYII=</picture>
+        </char>
+        <char character="3" code="0033">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAYAAABirU3bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAKElEQVQImVXKwQ0AIRCAwFlj/y1zn4tRnsAgP5VVqeMsmJlX3Me+K3z5+A0FEAQhKgAAAABJRU5ErkJggg==</picture>
+        </char>
+        <char character="4" code="0034">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAYAAABirU3bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAKElEQVQImV2LQQoAMAjDUv//53gYQzGXQmgAVP1bHAogyQiVV6zHpgGguw/8w9V7sQAAAABJRU5ErkJggg==</picture>
+        </char>
+        <char character="5" code="0035">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAYAAABirU3bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAKElEQVQImWNkYGD4zwAF////Z2CBMWCAEV0F0////1FUsDAyMjIgAwAxnRD/PMsxIAAAAABJRU5ErkJggg==</picture>
+        </char>
+        <char character="6" code="0036">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAYAAABirU3bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAJklEQVQImV2KMQ4AMAiEwPT/Xz4X7SATIQiEIQlvZfEedY8CUH9o0cAOALKJEQcAAAAASUVORK5CYII=</picture>
+        </char>
+        <char character="7" code="0037">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAYAAABirU3bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAIklEQVQImYXIoREAIAwAsaf77xwMh8AQmVXpQIO41/T4xwaldgoAT6KTDAAAAABJRU5ErkJggg==</picture>
+        </char>
+        <char character="8" code="0038">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAYAAABirU3bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAJElEQVQImWNkYGD4zwAF////Z2CCMWCAiYGBgYGRkRFVAK8KADSQCgZdBFQaAAAAAElFTkSuQmCC</picture>
+        </char>
+        <char character="9" code="0039">
+            <picture format="png">iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAYAAABirU3bAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAKUlEQVQImVWKsQ0AMAyDcNT/X6ZLoyZMFiaAPFSqR1MASb5QV3HmC3ABlF4NBao+XzkAAAAASUVORK5CYII=</picture>
+        </char>
+    </chars>
+</data>
